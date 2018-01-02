@@ -1,1 +1,39 @@
+最初的DOM存储规格包含了两种对象的定义：sessionstorage和globalstorage。
+后者在HTML5中由
+localStorage替换了。这些对象中都被罕少一种浏览器实现了，并且都是全局变量,
+都可作为window的一个属性。
 
+
+storage类型用来存储最大限（因浏览器而异）的名一值对。Storage的实例和其他对象行为一样，
+有下列额外的方法。
+口c1ear()―删除所有值．Firefox中没有实现。
+口getItem(name)―根据指定的名字name获取对应的值。
+口key(index)―在指定的数字位置获取该位置的名字。
+口removeItem(name)―删除由名字name指定的名一值对。
+口setItem(name,value)―为指定名字namc设置一个对应的值。
+可以直接调用getItem()、removeItem()和setItem()方法或通过操作storage对象间接调用。
+因为每个项目都是作为属性存储在该对象上的，所以可以通过点语法或者方括号语法访问属性来读取
+值，设置也一样，或者通过delete操作符进行侧除。
+你还可以使用length属性来判断有多少名-值对存放在storage对象中。但无法判断对象中所
+有数据的尺寸，不过IE8提供了一个remainingSpace属性，用于获取还可以使用的存储空间大小的
+字节数。
+
+storage类型只能存储字符串，非字符串的数据在存储前会被转化为字符串
+遍历方法
+for (var key in storage) {
+  console.log(key);
+}
+
+storageItem类型
+在Storage对象中所存储的每个项目其实都是storageltem的实例．无论何时存入新值，都会
+创建一个storageItem对象。该对象只有两个属性：value，被存储的数据的值．secure，表示该值
+是否必须通过https访问的布尔值。由于toString()和valueof()都返回value属性，所以每个
+storageItem都可以当作字符串直接用干字符串连接或者数据显示。
+当通过getItem()或者点记号访问一个值的时候，它实际上返回的是storageItem实例。你任
+何时候都可以设置该对象value属性，但是只有脚本在使用HITPS协议访问的页面中运行时才可以
+设置secure标志。默认情况下，使用标准HTTP访问时，secure是设置为false的，使用HTTPS
+时则为true。这样可以指定一些信息为非敏感信息，以便让它们在同一个域名使用HttP协议的页面
+可以访问到。下面是例子：
+loca1Storage.name="Nicholas";
+localstorage.name.secure=false;//允许在非安全页面访问
+任何试图在一个通过HTTP访问的贞面上设置sccure标志的行为都会引发l个Javascript错误．
