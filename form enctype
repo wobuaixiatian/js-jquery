@@ -1,0 +1,20 @@
+项目最近实现一个上传下载功能，但是下载速度很慢， 查找资料后发现可以再前端模拟一个form表单来实现下载功能，前面功能中有奖，这里就不详细说了。
+这里发现了form的一个属性enctype。
+首先怎么获取一个form的enctype
+var x = document.getElementById("myForm").enctype;
+设置参照下面的代码
+document.getElementById("myForm").enctype = "multipart/form-data";
+值类型
+Value	                             Description
+application/x-www-form-urlencoded   	All characters are encoded before sent (this is default)
+multipart/form-data	   No characters are encoded. This value is required when you are using forms that have a file upload control
+text/plain	           Spaces are converted to "+" symbols, but no special characters are encoded
+
+文档上面写得一个解释
+Return Value:A String, representing how form-data should be encoded before sending it to the server
+大意时一个String，表示表单数据在发送到服务器之前应该如何编码（也就是说，这个属性表示的是编码的方式）
+
+Note: The enctype attribute can be used only if method="post".（看到post，就是说，这个属性只有在post请求的时候才能使用）
+
+使用的例子：
+<form id="importDataForm" enctype="multipart/form-data"><input name="file" type="file" /></form>（上传文件）
