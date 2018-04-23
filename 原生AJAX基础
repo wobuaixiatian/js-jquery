@@ -1,0 +1,61 @@
+AJAX = Asynchronous JavaScript And XML.
+早起的IE浏览器使用的是ActiveX不是XMLHttpRequest来创建请求
+所以为了让自己的代码更加强壮
+if (window.XMLHttpRequest) {
+    // code for modern browsers
+    xmlhttp = new XMLHttpRequest();
+ } else {
+    // code for old IE browsers
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+这段代码需要添加
+
+这个对象的方法列表
+Method	                  Description
+new XMLHttpRequest()	        Creates a new XMLHttpRequest object(创建对象)
+abort()	                     Cancels the current request(取消当前请求)
+getAllResponseHeaders()	     Returns header information(返回消息头)
+getResponseHeader()	        Returns specific header information(返回指定的消息头内容)
+open(method, url, async, user, psw)	     Specifies the request(指定请求参数)
+                          method: the request type GET or POST(get还是post请求)
+                          url: the file location(路径)
+                          async: true (asynchronous) or false (synchronous)(同步还是异步，true：异步。false：同步)
+                          user: optional user name(有登陆要求时，用户名)
+                          psw: optional password(用户密码)
+send()	            Sends the request to the server,Used for GET requests(GET请求时使用)
+send(string)	        Sends the request to the server,Used for POST requests(POST请求时使用)
+setRequestHeader()	    Adds a label/value pair to the header to be sent(添加键值对到消息头)
+
+Property	                        Description
+onreadystatechange	        Defines a function to be called when the readyState property changes(定义一个方法，当状态变化的时候触发)
+readyState	                 Holds the status of the XMLHttpRequest.(状态的值列表)
+                                    0: request not initialized (请求没有初始化)
+                                    1: server connection established(建立服务连接)
+                                    2: request received (请求被接受)
+                                    3: processing request (正在处理请求)
+                                    4: request finished and response is ready(请求结束，正在返回响应)
+responseText	              Returns the response data as a string(响应的结果，字符串形式)
+responseXML	                Returns the response data as XML data(响应的结果，xml形式)
+status	                    Returns the status-number of a request(请求结果值列表)
+                                  200: "OK"()
+                                  403: "Forbidden"()
+                                  404: "Not Found"()
+                                  For a complete list go to the Http Messages Reference()
+statusText                	Returns the status-text (e.g. "OK" or "Not Found")(状态值文本)
+
+基本的一个应用列子
+其中url为服务器请求的地址，myFunction方法请求ok后触发的方法
+function loadTxt(url, myFunction) {
+  var xhttp;
+  xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+目前这个应用应该较少，主要是jquery现在封装的很不错。直接使用$.ajax时很方便的。作为自己知识的一点拓展
+
+参考:https://www.w3schools.com/js/js_ajax_intro.asp
