@@ -1,0 +1,51 @@
+DOM对象和JQuery对象的区别
+
+jQuery对象和DOM对象使用说明，需要的朋友可以参考下。
+1.jQuery对象和DOM对象
+第一次学习jQuery,经常分辨不清哪些是jQuery对象，哪些是 DOM对象，因此需要重点了解jQuery对象和DOM对象以及它们之间的关系.
+DOM对象，即是我们用传统的方法(javascript)获得的对象，jQuery对象即是用jQuery类库的选择器获得的对象;
+复制代码 代码如下:
+
+var domObj = document.getElementById("id"); //DOM对象
+var $obj = $("#id"); //jQuery对象;
+
+jQuery对象就是通过jQuery包装DOM对象后产生的对象，它是jQuery独有的。如果一个对象是jQuery对象，那么就可以使用jQuery里的方法，例:
+$("#foo").html(); //获取id为foo的元素内的html代码，html()是jQuery特有的方法;
+上面的那段代码等同于:
+document.getElementById("foo").innerHTML;
+
+注意：在jQuery对象中无法使用DOM对象的任何方法。
+例如$("#id").innerHTML 和$("#id").checked之类的写法都是错误的，可以用$("#id").html()和$("#id").attr ("checked")之类的 jQuery方法来代替。同样，DOM对象也不能使用jQuery方法。学习jQuery开始就应当树立正确的观念，分清jQuery对象和DOM对象之间的区别，之后学习 jQuery就会轻松很多的。
+
+2.jQuery对象和DOM对象的互相转换
+
+在上面第一点说了，jquery对象和dom对象是不一样的！比如jquery对象不能使用dom的方法，dom对象不能使用jquery方法，那假如我 jquery没有封装我要的方法，那能怎么办呢？
+这时我们可以将jquer对象转换成dom对象
+
+jquery对象转换成 dom对象
+jquery提供了两种方法将一个jquery对象转换成一个dom对象，即[index]和get(index)。可能有人会觉得奇怪，怎么是用下标呢，没错，jquery对象就是一个数组对象.
+下面代码将演示一个jquery对象转换成dom对象，再使用dom对象的方法
+复制代码 代码如下:
+
+var $cr=$("#cr"); //jquery对象
+var cr = $cr[0]; //dom对象 也可写成 var cr=$cr.get(0);
+alert(cr.checked); //检测这个checkbox是否给选中
+
+dom对象转换成jquery对象
+对于一个dom对象，只需要用$()把dom对象包装起来，就可以获得一个jquery对象了，方法为$(dom对象);
+复制代码 代码如下:
+
+var cr=document.getElementById("cr"); //dom对象
+var $cr = $(cr); //转换成jquery对象
+
+转换后可以任意使用jquery中的方法了.
+
+通过以上的方法，可以任意的相互转换jquery对象和dom对象.
+最后再次强调，dom对象才能使用dom中的方法，jquery对象不可以使用dom中的方法，但 jquery对象提供了一套更加完善的工具用于操作dom,关于jquery的dom操作将在后面的文章进行详细讲解.
+
+
+ps: 平时用到的jquery对象都是通过$()函数制造出来的，$()函数就是一个jquery对象的制造工厂.
+建议:如果获取的对象是 jquery对象，那么在变量前面加上$,这样方便容易识别出哪些是jquery对象,例如:
+var $variable = jquery对象;
+如果获取的是dom对象，则定义如下:
+var variable = dom对象
